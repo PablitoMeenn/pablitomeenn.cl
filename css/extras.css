@@ -1,0 +1,207 @@
+/* =======================================================
+*  Componentes propios (reemplazan a animate.css, Owl Carousel
+*  y Magnific Popup) y correcciones sobre la plantilla.
+* ======================================================= */
+
+/* ---------- Animaciones de entrada ---------- */
+.animated-fast {
+  animation-duration: .5s;
+  animation-fill-mode: both;
+}
+.fadeIn { animation-name: fadeIn; }
+.fadeInUp { animation-name: fadeInUp; }
+.fadeInLeft { animation-name: fadeInLeft; }
+.fadeInRight { animation-name: fadeInRight; }
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translate3d(0, 40px, 0); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes fadeInLeft {
+  from { opacity: 0; transform: translate3d(-50px, 0, 0); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes fadeInRight {
+  from { opacity: 0; transform: translate3d(50px, 0, 0); }
+  to { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .js .animate-box { opacity: 1; animation: none; }
+  .heart { animation: none; }
+}
+
+/* ---------- Pantalla de carga ---------- */
+.fh5co-loader {
+  transition: opacity .6s, visibility .6s;
+}
+.fh5co-loader.is-hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+/* Sin JavaScript no hay quien la oculte: no mostrarla */
+html:not(.js) .fh5co-loader { display: none; }
+
+/* ---------- Portada en móviles ---------- */
+@media screen and (max-width: 768px) {
+  /* El logo se partía en 5 líneas y tapaba el título */
+  .fh5co-nav #fh5co-logo {
+    font-size: clamp(22px, 6.5vw, 30px);
+    white-space: nowrap;
+  }
+}
+@media screen and (max-width: 480px) {
+  /* Los 4 bloques del reloj en una sola fila */
+  .countdown-blocks {
+    flex-wrap: nowrap;
+    gap: 8px;
+  }
+  .countdown-blocks .time-block {
+    flex: 1 1 0;
+    min-width: 0;
+    padding: 12px 2px;
+  }
+  .countdown-blocks .number { font-size: 1.8em; }
+  .countdown-blocks .label {
+    padding: 0;
+    font-size: 10px;
+  }
+}
+
+/* ---------- Galería ---------- */
+#fh5co-gallery-list li { background-color: #dcdcdc; }
+
+/* ---------- Carrusel de mensajes ---------- */
+.testimonial-carousel {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  overscroll-behavior-x: contain;
+}
+.testimonial-carousel::-webkit-scrollbar { display: none; }
+.testimonial-carousel > .item {
+  flex: 0 0 100%;
+  min-width: 0;
+  scroll-snap-align: center;
+  scroll-snap-stop: always;
+}
+.carousel-dots {
+  text-align: center;
+  margin-top: 10px;
+}
+.carousel-dots button {
+  width: 10px;
+  height: 10px;
+  margin: 5px 7px;
+  padding: 0;
+  box-sizing: content-box;
+  border: 2px solid transparent;
+  border-radius: 50%;
+  background: #e6e6e6;
+  background-clip: padding-box;
+  cursor: pointer;
+  transition: background .2s;
+}
+.carousel-dots button:hover,
+.carousel-dots button:focus-visible { background-color: #ccc; }
+.carousel-dots button[aria-current="true"] {
+  background: transparent;
+  border-color: #F14E95;
+}
+
+/* ---------- Visor de fotos ---------- */
+html:has(dialog.lightbox[open]) { overflow: hidden; }
+
+dialog.lightbox {
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  overflow: hidden;
+}
+dialog.lightbox::backdrop { background: rgba(11, 11, 11, .88); }
+.lightbox figure {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  margin: 0;
+  padding: 50px 64px 20px;
+}
+.lightbox img {
+  max-width: 100%;
+  max-height: calc(100% - 40px);
+  object-fit: contain;
+  box-shadow: 0 0 10px rgba(0, 0, 0, .6);
+  cursor: zoom-out;
+}
+.lightbox figcaption {
+  margin-top: 10px;
+  color: #f3f3f3;
+  font-size: 14px;
+  text-align: center;
+}
+.lightbox button {
+  position: absolute;
+  padding: 8px 18px;
+  border: 0;
+  background: none;
+  color: #fff;
+  font-size: 44px;
+  line-height: 1;
+  opacity: .7;
+  cursor: pointer;
+}
+.lightbox button:hover,
+.lightbox button:focus-visible { opacity: 1; }
+.lightbox-close { top: 0; right: 0; }
+.lightbox-prev,
+.lightbox-next { top: 50%; transform: translateY(-50%); }
+.lightbox-prev { left: 0; }
+.lightbox-next { right: 0; }
+@media screen and (max-width: 768px) {
+  .lightbox figure { padding: 50px 8px 16px; }
+  .lightbox button { font-size: 36px; padding: 8px 12px; }
+}
+
+/* ---------- Sección del evento ---------- */
+/* Las columnas contienen elementos flotantes: sin esto, en móviles
+   el video quedaba montado sobre el texto */
+#fh5co-services .row > [class*="col-"]::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* ---------- Video ---------- */
+.video-embed {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+}
+.video-embed iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+@media screen and (max-width: 992px) {
+  .video-embed { margin-top: 30px; }
+}
+
+/* ---------- Pie de página ---------- */
+#fh5co-footer .fh5co-social-icons { margin-bottom: 20px; }
